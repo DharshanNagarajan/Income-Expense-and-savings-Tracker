@@ -1,0 +1,31 @@
+let income = 0;
+let expense = 0;
+function addEntry() {
+  const description = document.getElementById("description").value.trim();
+  const amount = parseFloat(document.getElementById("amount").value);
+  const type = document.getElementById("type").value;
+  const entryList = document.getElementById("entryList");
+
+  if (!description || isNaN(amount) || amount <= 0) {
+    alert("Please enter a valid description and amount.");
+    return;
+  }
+  const li = document.createElement("li");
+  li.className = type;
+  li.textContent = `${description}: ₹${amount}`;
+  entryList.appendChild(li);
+  if (type === "income") {
+    income += amount;
+  } else {
+    expense += amount;
+  }
+  updateSummary();
+  // Clear inputs
+  document.getElementById("description").value = "";
+  document.getElementById("amount").value = "";
+}
+function updateSummary() {
+  document.getElementById("totalIncome").textContent = income.toFixed(2);
+  document.getElementById("totalExpense").textContent = expense.toFixed(2);
+  document.getElementById("savings").textContent = (income - expense).toFixed(2);
+}
